@@ -75,18 +75,11 @@ class SlackRenderer(Renderer):
             if data_docs_pages:
                 if notify_with is not None:
                     for docs_link_key in notify_with:
-                        if docs_link_key in data_docs_pages.keys():
-                            docs_link = data_docs_pages[docs_link_key]
-                            report_element = self._get_report_element(docs_link)
-                        else:
-                            logger.critical(
-                                f"*ERROR*: Slack is trying to provide a link to the following DataDocs: `{str(docs_link_key)}`, but it is not configured under `data_docs_sites` in the `great_expectations.yml`\n"
-                            )
-                            report_element = {
+                        report_element = {
                                 "type": "section",
                                 "text": {
                                     "type": "mrkdwn",
-                                    "text": f"*ERROR*: Slack is trying to provide a link to the following DataDocs: `{str(docs_link_key)}`, but it is not configured under `data_docs_sites` in the `great_expectations.yml`\n",
+                                    "text": f"*Tardis Link*:  `{str(docs_link_key)}`",
                                 },
                             }
                         if report_element:
@@ -122,16 +115,6 @@ class SlackRenderer(Renderer):
                 }
                 query["blocks"].append(dataset_element)
 
-        documentation_url = "https://docs.greatexpectations.io/en/latest/guides/tutorials/getting_started/set_up_data_docs.html"
-        footer_section = {
-            "type": "context",
-            "elements": [
-                {
-                    "type": "mrkdwn",
-                    "text": f"Learn how to review validation results in Data Docs: {documentation_url}",
-                }
-            ],
-        }
 
         divider_block = {"type": "divider"}
         query["blocks"].append(divider_block)
