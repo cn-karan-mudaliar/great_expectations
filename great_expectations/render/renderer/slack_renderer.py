@@ -118,7 +118,7 @@ class SlackRenderer(Renderer):
 
         divider_block = {"type": "divider"}
         query["blocks"].append(divider_block)
-        query["blocks"].append(footer_section)
+        
         return query
 
     def _get_report_element(self, docs_link):
